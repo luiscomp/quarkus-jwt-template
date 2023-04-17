@@ -12,6 +12,6 @@ public class AppHealthCheck implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("ReadFace Health Check").up().build();
+        return HealthCheckResponse.named("Template Health Check").up().build();
     }
 }

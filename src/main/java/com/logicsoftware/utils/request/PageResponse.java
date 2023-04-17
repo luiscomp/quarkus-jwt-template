@@ -1,10 +1,19 @@
 package com.logicsoftware.utils.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import java.util.List;
+
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.logicsoftware.utils.database.Pageable;
+import com.logicsoftware.utils.mappers.GenericMapper;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder(access = AccessLevel.PUBLIC)
@@ -28,5 +37,15 @@ public class PageResponse<T> {
 
     public Long getTotalPages() {
         return (long) Math.ceil((double) totalElements / pageSize);
+    }
+
+    static public <T> PageResponse<T> ok(Pageable<?> page, Class<T> clazz) {
+        GenericMapper mapper = GenericMapper.getInstance();
+
+        return PageResponse.<T>builder()
+                .page(mapper.toList(page.getPage(), clazz))
+                .totalElements(page.getTotalElements())
+                .pageSize(page.getPageSize())
+                .build();
     }
 }

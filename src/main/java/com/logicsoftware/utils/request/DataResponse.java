@@ -4,6 +4,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.logicsoftware.utils.enums.AppStatus;
+import com.logicsoftware.utils.mappers.GenericMapper;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,19 @@ public class DataResponse<T> {
     private AppStatus status;
     @Schema(description = "Data response of request called")
     private T data;
+
+    public static <T> DataResponse<T> ok(Object data, Class<T> clazz) {
+        GenericMapper mapper = GenericMapper.getInstance();
+
+        return DataResponse.<T>builder()
+                .data(mapper.toObject(data, clazz))
+                .status(AppStatus.SUCCESS)
+                .build();
+    }
+
+    public static DataResponse<Void> ok() {
+        return DataResponse.<Void>builder()
+                .status(AppStatus.SUCCESS)
+                .build();
+    }
 }

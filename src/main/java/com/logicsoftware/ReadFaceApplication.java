@@ -16,9 +16,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
                 @Tag(name="Endereço", description="Métodos de controle de Endereço.")
         },
         info = @Info(
-                title="ReadFace API",
+                title="Template API",
                 version = "1.0",
-                description = "API de integração com o ReadFace.",
+                description = "API de integração com o Template.",
                 contact = @Contact(
                         name = "Logic Software",
                         url = "https://www.logicsoftware.com.br",

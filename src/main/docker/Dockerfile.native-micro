@@ -10,11 +10,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/readface-backend .
+# docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/template-backend .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/readface-backend
+# docker run -i --rm -p 8080:8080 quarkus/template-backend
 #
 ###
 FROM quay.io/quarkus/quarkus-micro-image:1.0

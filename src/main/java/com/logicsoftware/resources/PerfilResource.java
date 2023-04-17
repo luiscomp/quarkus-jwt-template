@@ -26,7 +26,6 @@ import com.logicsoftware.dtos.perfil.CriarPerfilDTO;
 import com.logicsoftware.dtos.perfil.FiltroPerfilDTO;
 import com.logicsoftware.dtos.perfil.PerfilDTO;
 import com.logicsoftware.services.PerfilService;
-import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.DataResponse;
 import com.logicsoftware.utils.request.PageResponse;
 
@@ -48,12 +47,7 @@ public class PerfilResource {
         @Parameter(name = "size", description = "Tamanho da página", example = "10", required = true)
     })
     public PageResponse<PerfilDTO> listar(FiltroPerfilDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-        PageResponse.PageResponseBuilder<PerfilDTO> response = PageResponse.builder();
-        response.page(service.listar(filter, page, size));
-        response.totalElements(service.count(filter));
-        response.pageSize(size);
-
-        return response.build();
+        return PageResponse.ok(service.listar(filter, page, size), PerfilDTO.class);
     }
 
     @GET
@@ -63,10 +57,7 @@ public class PerfilResource {
         @Parameter(name = "id", description = "id do Perfil", example = "1", required = true)
     })
     public DataResponse<PerfilDTO> buscar(@PathParam("id") Long id) {
-        DataResponse.DataResponseBuilder<PerfilDTO> response = DataResponse.builder();
-        response.data(service.recuperar(id));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.recuperar(id), PerfilDTO.class);
     }
 
     @POST
@@ -76,10 +67,7 @@ public class PerfilResource {
     })
     @Transactional
     public DataResponse<PerfilDTO> criar(@Valid CriarPerfilDTO perfil) {
-        DataResponse.DataResponseBuilder<PerfilDTO> response = DataResponse.builder();
-        response.data(service.criar(perfil));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.criar(perfil), PerfilDTO.class);
     }
 
     @PUT
@@ -90,10 +78,7 @@ public class PerfilResource {
     })
     @Transactional
     public DataResponse<PerfilDTO> atualizar(@Valid CriarPerfilDTO perfil, @PathParam("id") Long id) throws IllegalAccessException, InvocationTargetException {
-        DataResponse.DataResponseBuilder<PerfilDTO> response = DataResponse.builder();
-        response.data(service.atualizar(perfil, id));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.atualizar(perfil, id), PerfilDTO.class);
     }
 
     @DELETE
@@ -104,9 +89,7 @@ public class PerfilResource {
     })
     @Transactional
     public DataResponse<Void> delete(@PathParam("id") Long id) {
-        DataResponse.DataResponseBuilder<Void> response = DataResponse.builder();
         service.deletar(id);
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok();
     }
 }

@@ -1,7 +1,5 @@
 package com.logicsoftware.dtos;
 
-import javax.validation.constraints.NotEmpty;
-
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.logicsoftware.utils.database.Filter;
@@ -17,8 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Representação para criar um relacionamento")
-public class IdentityDTO {
-    @NotEmpty(message = "Id de relacionamento é obrigatório")
+public class IdentityNullDTO {
     @Schema(description = "Id de relacionamento", example = "1", required = true)
     private Long id;
 }

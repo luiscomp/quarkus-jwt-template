@@ -39,7 +39,7 @@ html{
 }
 
 #swagger-ui .topbar-wrapper .download-url-wrapper::after {
-    content: "ReadFace (powered by Quarkus)";
+    content: "Template (powered by Quarkus)";
     color: #9a9da0;
     padding-top: 12px;
     position: absolute;

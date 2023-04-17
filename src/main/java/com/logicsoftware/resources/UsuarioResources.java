@@ -26,7 +26,6 @@ import com.logicsoftware.dtos.usuario.CriarUsuarioDTO;
 import com.logicsoftware.dtos.usuario.FiltroUsuarioDTO;
 import com.logicsoftware.dtos.usuario.UsuarioDTO;
 import com.logicsoftware.services.UsuarioService;
-import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.DataResponse;
 import com.logicsoftware.utils.request.PageResponse;
 
@@ -48,12 +47,7 @@ public class UsuarioResources {
         @Parameter(name = "size", description = "Tamanho da página", example = "10", required = true)
     })
     public PageResponse<UsuarioDTO> listar(FiltroUsuarioDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
-        PageResponse.PageResponseBuilder<UsuarioDTO> response = PageResponse.builder();
-        response.page(service.listar(filter, page, size));
-        response.totalElements(service.count(filter));
-        response.pageSize(size);
-
-        return response.build();
+        return PageResponse.ok(service.listar(filter, page, size), UsuarioDTO.class);
     }
 
     @GET
@@ -63,10 +57,7 @@ public class UsuarioResources {
         @Parameter(name = "id", description = "id do Usuário", example = "1", required = true)
     })
     public DataResponse<UsuarioDTO> buscar(@PathParam("id") Long id) {
-        DataResponse.DataResponseBuilder<UsuarioDTO> response = DataResponse.builder();
-        response.data(service.recuperar(id));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.recuperar(id), UsuarioDTO.class);
     }
 
     @POST
@@ -76,10 +67,7 @@ public class UsuarioResources {
     })
     @Transactional
     public DataResponse<UsuarioDTO> criar(@Valid CriarUsuarioDTO usuario) {
-        DataResponse.DataResponseBuilder<UsuarioDTO> response = DataResponse.builder();
-        response.data(service.criar(usuario));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.criar(usuario), UsuarioDTO.class);
     }
 
     @PUT
@@ -90,10 +78,7 @@ public class UsuarioResources {
     })
     @Transactional
     public DataResponse<UsuarioDTO> atualizar(@Valid CriarUsuarioDTO usuario, @PathParam("id") Long id) throws IllegalAccessException, InvocationTargetException {
-        DataResponse.DataResponseBuilder<UsuarioDTO> response = DataResponse.builder();
-        response.data(service.atualizar(usuario, id));
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok(service.atualizar(usuario, id), UsuarioDTO.class);
     }
 
     @DELETE
@@ -104,9 +89,7 @@ public class UsuarioResources {
     })
     @Transactional
     public DataResponse<Void> delete(@PathParam("id") Long id) {
-        DataResponse.DataResponseBuilder<Void> response = DataResponse.builder();
         service.deletar(id);
-        response.status(AppStatus.SUCCESS);
-        return response.build();
+        return DataResponse.ok();
     }
 }

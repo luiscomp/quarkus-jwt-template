@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "usuario", schema = "readface")
+@Table(name = "usuario", schema = "template")
 @FilterDefs({
     @FilterDef(name = "nome", parameters = @ParamDef(name = "nome", type = "string")),
     @FilterDef(name = "email", parameters = @ParamDef(name = "email", type = "string")),
