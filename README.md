@@ -65,3 +65,29 @@ If you want to learn more about building native executables, please consult http
 Easily start your RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## JWT Configuration
+É necessário que se crie chaves para validação dos tokens JWT. Sabendo disso abra o terminal e vá até a pasta `src/main/resources`
+
+```shell
+$ cd src/main/resources
+```
+
+Then, for Unix systems, run the following command to generate the primary key.
+
+- Note that you should not add a password to the created key.
+```shell
+$ openssl req -newkey rsa:2048 -new -nodes -keyout privatekey.pem -out csr.pem
+```
+to generate the public key from the private key:
+```shell
+$ openssl rsa -in privatekey.pem -pubout > publickey.pem
+```
+
+The configuration is already done in the settings (`application.properties`).
+
+```properties
+mp.jwt.verify.publickey.location=publickey.pem
+mp.jwt.verify.issuer=https://logicsoftware.com.br
+quarkus.native.resources.includes=publicKey.pem
+```

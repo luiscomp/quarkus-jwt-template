@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.logicsoftware.utils.database.Filter;
-import com.logicsoftware.utils.database.FilterUpper;
+import com.logicsoftware.utils.database.IgnoreCase;
 import com.logicsoftware.utils.database.Pageable;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -46,7 +46,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
     }
 
     private String aplicarFiltroNoCampo(Field field, Object value, Boolean isFirstField) {
-        if (field.isAnnotationPresent(FilterUpper.class)) {
+        if (field.isAnnotationPresent(IgnoreCase.class)) {
             return (isFirstField ? "" : " OR ") + " UPPER(" + field.getName() + ") LIKE CONCAT('%', :" + field.getName() + ", '%')";
         }
         if (String.class.isAssignableFrom(field.getType())) {
@@ -57,7 +57,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
     }
 
     private Object aplicarValorNoFiltro(Field field, Object value) {
-        if (field.isAnnotationPresent(FilterUpper.class)) {
+        if (field.isAnnotationPresent(IgnoreCase.class)) {
             return value.toString().toUpperCase();
         }
         return value;
