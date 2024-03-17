@@ -18,7 +18,7 @@ import io.quarkus.panache.common.Parameters;
 public class BaseRepository<T> implements PanacheRepository<T> {
     
     public PanacheQuery<T> aplicarFiltros(Object filtro) {
-        String query = "";
+        StringBuilder query = new StringBuilder();
         Parameters parameters = new Parameters();
     
         for (Field field : getAllFields(filtro.getClass())) {
@@ -26,7 +26,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
                 field.setAccessible(true);
                 Object value = field.get(filtro);
                 if (Objects.nonNull(value) && !aninhado(field)) {
-                    query += aplicarFiltroNoCampo(field, value, query.isEmpty());
+                    query.append(aplicarFiltroNoCampo(field, value, query.length() == 0));
                     parameters.and(field.getName(), aplicarValorNoFiltro(field, value));
                 }
             } catch (IllegalAccessException e) {
@@ -34,7 +34,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
             }
         }
     
-        return find(query, parameters);
+        return find(query.toString(), parameters);
     }
 
     private List<Field> getAllFields(Class<?> clazz) {
@@ -47,12 +47,12 @@ public class BaseRepository<T> implements PanacheRepository<T> {
 
     private String aplicarFiltroNoCampo(Field field, Object value, Boolean isFirstField) {
         if (field.isAnnotationPresent(IgnoreCase.class)) {
-            return (isFirstField ? "" : " OR ") + " UPPER(" + field.getName() + ") LIKE CONCAT('%', :" + field.getName() + ", '%')";
+            return (isFirstField ? "" : " OR ") + " UPPER(" + field.getName() + ") LIKE CONCAT('%', :" + value + ", '%')";
         }
         if (String.class.isAssignableFrom(field.getType())) {
-            return (isFirstField ? "" : " OR ") + field.getName() + " LIKE CONCAT('%', :" + field.getName() + ", '%')";
+            return (isFirstField ? "" : " OR ") + field.getName() + " LIKE CONCAT('%', :" + value + ", '%')";
         } else {
-            return (isFirstField ? "" : " OR ") + field.getName() + " = :" + field.getName();
+            return (isFirstField ? "" : " OR ") + field.getName() + " = :" + value;
         }
     }
 
