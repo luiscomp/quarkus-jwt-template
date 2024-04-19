@@ -25,5 +25,5 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
                         email = "logicsoftware86@gmail.com")),
         security = @SecurityRequirement(name = "jwt")
 )
-public class ReadFaceApplication extends Application {
+public class MainApplication extends Application {
 }
