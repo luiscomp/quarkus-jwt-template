@@ -2,7 +2,6 @@ package com.logicsoftware.utils.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.logicsoftware.utils.enums.AppStatus;
-
 import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

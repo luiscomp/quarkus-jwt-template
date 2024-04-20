@@ -1,13 +1,11 @@
 package com.logicsoftware.dtos.endereco;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Data
 @Builder

@@ -1,19 +1,12 @@
 package com.logicsoftware.utils.request;
 
-import java.util.List;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.logicsoftware.utils.database.Pageable;
 import com.logicsoftware.utils.mappers.GenericMapper;
+import lombok.*;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Data
 @Builder(access = AccessLevel.PUBLIC)

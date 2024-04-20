@@ -1,12 +1,10 @@
 package com.logicsoftware.dtos.perfil;
 
-import javax.validation.constraints.NotEmpty;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Data
 @AllArgsConstructor

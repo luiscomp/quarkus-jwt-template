@@ -67,7 +67,7 @@ Easily start your RESTful Web Services
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
 
 ## JWT Configuration
-É necessário que se crie chaves para validação dos tokens JWT. Sabendo disso abra o terminal e vá até a pasta `src/main/resources`
+Is required that's create keys for validate the JWT tokens. Knowing this open the terminal and go into folder `src/main/resources`.
 
 ```shell
 $ cd src/main/resources

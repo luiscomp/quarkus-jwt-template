@@ -1,27 +1,20 @@
 package com.logicsoftware.services;
 
-import java.util.Collections;
-import java.util.Objects;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-
+import com.logicsoftware.models.Usuario;
+import com.logicsoftware.utils.auth.*;
+import com.logicsoftware.utils.enums.EnumUtils;
+import com.logicsoftware.utils.i18n.Messages;
+import io.quarkus.arc.log.LoggerName;
+import io.quarkus.security.UnauthorizedException;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
-import com.logicsoftware.models.Usuario;
-import com.logicsoftware.utils.auth.AuthRequest;
-import com.logicsoftware.utils.auth.AuthResponse;
-import com.logicsoftware.utils.auth.GrantType;
-import com.logicsoftware.utils.auth.PasswordEncoder;
-import com.logicsoftware.utils.auth.TokenUtils;
-import com.logicsoftware.utils.enums.EnumUtils;
-import com.logicsoftware.utils.i18n.Messages;
-
-import io.quarkus.arc.log.LoggerName;
-import io.quarkus.security.UnauthorizedException;
+import java.util.Collections;
+import java.util.Objects;
 
 @ApplicationScoped
 public class AuthenticationService {
@@ -96,5 +89,9 @@ public class AuthenticationService {
         } catch (NotFoundException e) {
             throw new BadRequestException(message.getMessage("auth.token.invalido"));
         }
+    }
+
+    public String encodePassword(String senha) {
+        return passwordEncoder.encode(senha);
     }
 }

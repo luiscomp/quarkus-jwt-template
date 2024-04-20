@@ -1,14 +1,10 @@
 package com.logicsoftware.utils.auth;
 
-import javax.ws.rs.FormParam;
-
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import jakarta.ws.rs.FormParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Data
 @AllArgsConstructor
@@ -23,10 +19,10 @@ public class AuthRequest {
     private String password;
 
     @FormParam("grant_type")
-    @Schema(example = "password")
+    @Schema(name = "grant_type", example = "password")
     private GrantType grantType;
 
     @FormParam("refresh_token")
-    @JsonProperty("refresh_token")
+    @Schema(name = "refresh_token")
     private String refreshToken;
 }

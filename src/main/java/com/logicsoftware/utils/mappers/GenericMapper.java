@@ -1,20 +1,17 @@
 package com.logicsoftware.utils.mappers;
 
+import com.logicsoftware.config.Beans;
+import com.logicsoftware.utils.database.Pageable;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
-import org.modelmapper.ModelMapper;
-
-import com.logicsoftware.config.Beans;
-import com.logicsoftware.utils.database.Pageable;
-
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @ApplicationScoped
 public class GenericMapper implements IGenericMapper {

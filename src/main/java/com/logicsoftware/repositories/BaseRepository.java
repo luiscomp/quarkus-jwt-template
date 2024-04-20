@@ -1,19 +1,18 @@
 package com.logicsoftware.repositories;
 
+import com.logicsoftware.utils.database.Filter;
+import com.logicsoftware.utils.database.IgnoreCase;
+import com.logicsoftware.utils.database.Pageable;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Page;
+import io.quarkus.panache.common.Parameters;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import com.logicsoftware.utils.database.Filter;
-import com.logicsoftware.utils.database.IgnoreCase;
-import com.logicsoftware.utils.database.Pageable;
-
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.quarkus.panache.common.Page;
-import io.quarkus.panache.common.Parameters;
 
 public class BaseRepository<T> implements PanacheRepository<T> {
     

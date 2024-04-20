@@ -1,10 +1,9 @@
 package com.logicsoftware.repositories;
 
-import java.util.Optional;
-
-import javax.enterprise.context.ApplicationScoped;
-
 import com.logicsoftware.models.Usuario;
+import jakarta.enterprise.context.ApplicationScoped;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class UsuarioRepository extends BaseRepository<Usuario> {

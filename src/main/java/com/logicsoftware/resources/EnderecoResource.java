@@ -1,23 +1,17 @@
 package com.logicsoftware.resources;
 
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameters;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
 import com.logicsoftware.dtos.endereco.ViaCepResponseDTO;
 import com.logicsoftware.services.EnderecoService;
 import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.DataResponse;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameters;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Tag(name = "Endereço")
 @Path("/endereco")

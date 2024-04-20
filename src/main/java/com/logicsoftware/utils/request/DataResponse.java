@@ -1,16 +1,10 @@
 package com.logicsoftware.utils.request;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.mappers.GenericMapper;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Data
 @Builder(access = AccessLevel.PUBLIC)

@@ -1,27 +1,24 @@
 package com.logicsoftware.exceptions.handlers;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Path.Node;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-
-import org.jboss.logging.Logger;
-import org.jboss.resteasy.spi.ApplicationException;
-
 import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.ErrorResponse;
-
 import io.quarkus.arc.log.LoggerName;
 import io.quarkus.hibernate.validator.runtime.jaxrs.ResteasyViolationExceptionImpl;
 import io.quarkus.security.ForbiddenException;
 import io.quarkus.security.UnauthorizedException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Path.Node;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.spi.ApplicationException;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Provider
 public class ApplicationHandler implements ExceptionMapper<ApplicationException> {

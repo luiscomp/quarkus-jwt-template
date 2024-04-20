@@ -1,12 +1,10 @@
 package com.logicsoftware.dtos.usuario;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
 import com.logicsoftware.dtos.IdentityDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Data
 @AllArgsConstructor

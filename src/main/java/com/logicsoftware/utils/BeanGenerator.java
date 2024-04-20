@@ -1,17 +1,15 @@
 package com.logicsoftware.utils;
 
+import io.quarkus.arc.Arc;
+import io.quarkus.arc.InstanceHandle;
+import io.quarkus.arc.log.LoggerName;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.jboss.logging.Logger;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import org.jboss.logging.Logger;
-
-import io.quarkus.arc.Arc;
-import io.quarkus.arc.InstanceHandle;
-import io.quarkus.arc.log.LoggerName;
 
 @ApplicationScoped
 public class BeanGenerator {

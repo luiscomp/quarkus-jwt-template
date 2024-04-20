@@ -1,33 +1,23 @@
 package com.logicsoftware.resources;
 
-import java.lang.reflect.InvocationTargetException;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameters;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
-
 import com.logicsoftware.dtos.usuario.CriarUsuarioDTO;
 import com.logicsoftware.dtos.usuario.FiltroUsuarioDTO;
 import com.logicsoftware.dtos.usuario.UsuarioDTO;
 import com.logicsoftware.services.UsuarioService;
 import com.logicsoftware.utils.request.DataResponse;
 import com.logicsoftware.utils.request.PageResponse;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameters;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Tag(name = "Usuário")
 @Path("/usuario")

@@ -1,8 +1,8 @@
 package com.logicsoftware.utils.mappers;
 
-import java.util.List;
-
 import com.logicsoftware.utils.database.Pageable;
+
+import java.util.List;
 
 public interface IGenericMapper {
     <T> T toObject(Object obj, Class<T> clazz);

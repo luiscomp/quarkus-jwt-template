@@ -1,5 +1,13 @@
 package com.logicsoftware.utils.auth;
 
+import io.smallrye.jwt.build.Jwt;
+import io.smallrye.jwt.build.JwtClaimsBuilder;
+import org.jose4j.jwa.AlgorithmConstraints;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -12,15 +20,6 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.jose4j.jwa.AlgorithmConstraints;
-import org.jose4j.jws.AlgorithmIdentifiers;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.consumer.JwtConsumer;
-import org.jose4j.jwt.consumer.JwtConsumerBuilder;
-
-import io.smallrye.jwt.build.Jwt;
-import io.smallrye.jwt.build.JwtClaimsBuilder;
 
 public class TokenUtils {
 	

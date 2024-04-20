@@ -1,15 +1,12 @@
 package com.logicsoftware.services;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.logging.Logger;
-
 import com.logicsoftware.clients.ViaCepClient;
 import com.logicsoftware.dtos.endereco.ViaCepResponseDTO;
-
 import io.quarkus.arc.log.LoggerName;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class EnderecoService {

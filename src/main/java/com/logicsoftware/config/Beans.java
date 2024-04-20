@@ -1,15 +1,12 @@
 package com.logicsoftware.config;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-
+import com.logicsoftware.utils.i18n.Messages;
+import io.quarkus.vertx.http.runtime.CurrentVertxRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-
-import com.logicsoftware.utils.i18n.Messages;
-
-import io.quarkus.vertx.http.runtime.CurrentVertxRequest;
 
 @ApplicationScoped
 public class Beans {

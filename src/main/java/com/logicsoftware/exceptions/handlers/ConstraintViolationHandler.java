@@ -1,16 +1,15 @@
 package com.logicsoftware.exceptions.handlers;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-
 import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.ErrorResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Provider

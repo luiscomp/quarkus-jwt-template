@@ -1,14 +1,13 @@
 package com.logicsoftware.exceptions.handlers;
 
-import java.util.Map;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-
 import com.logicsoftware.utils.enums.AppStatus;
 import com.logicsoftware.utils.request.ErrorResponse;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
+
+import java.util.Map;
 
 @Provider
 public class NotFoundHandler implements ExceptionMapper<NotFoundException> {
