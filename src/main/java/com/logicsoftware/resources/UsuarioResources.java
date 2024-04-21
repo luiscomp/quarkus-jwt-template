@@ -1,7 +1,6 @@
 package com.logicsoftware.resources;
 
 import com.logicsoftware.dtos.usuario.CriarUsuarioDTO;
-import com.logicsoftware.dtos.usuario.FiltroUsuarioDTO;
 import com.logicsoftware.dtos.usuario.UsuarioDTO;
 import com.logicsoftware.services.UsuarioService;
 import com.logicsoftware.utils.request.DataResponse;
@@ -36,7 +35,7 @@ public class UsuarioResources {
         @Parameter(name = "page", description = "Número da página", example = "1", required = true),
         @Parameter(name = "size", description = "Tamanho da página", example = "10", required = true)
     })
-    public PageResponse<UsuarioDTO> listar(FiltroUsuarioDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+    public PageResponse<UsuarioDTO> listar(UsuarioDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
         return PageResponse.ok(service.listar(filter, page, size), UsuarioDTO.class);
     }
 

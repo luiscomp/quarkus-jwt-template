@@ -1,12 +1,13 @@
 package com.logicsoftware.dtos.perfil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.logicsoftware.utils.database.Filter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-@Data
+@Data @Filter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

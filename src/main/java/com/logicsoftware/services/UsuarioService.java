@@ -1,7 +1,7 @@
 package com.logicsoftware.services;
 
 import com.logicsoftware.dtos.usuario.CriarUsuarioDTO;
-import com.logicsoftware.dtos.usuario.FiltroUsuarioDTO;
+import com.logicsoftware.dtos.usuario.UsuarioDTO;
 import com.logicsoftware.models.Usuario;
 import com.logicsoftware.repositories.UsuarioRepository;
 import com.logicsoftware.utils.auth.PasswordEncoder;
@@ -46,7 +46,7 @@ public class UsuarioService {
         return usuarioEncontrado.orElseThrow(() -> new NotFoundException(messages.getMessage("usuario.nao.encontrado.email", email)));
     }
 
-    public Pageable<Usuario> listar(FiltroUsuarioDTO filtro, int page, int size) {
+    public Pageable<Usuario> listar(UsuarioDTO filtro, int page, int size) {
         return usuarioRepository.findPage(filtro, page, size);
     }
 
