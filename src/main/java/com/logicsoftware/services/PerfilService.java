@@ -1,7 +1,7 @@
 package com.logicsoftware.services;
 
 import com.logicsoftware.dtos.perfil.CriarPerfilDTO;
-import com.logicsoftware.dtos.perfil.FiltroPerfilDTO;
+import com.logicsoftware.dtos.perfil.PerfilDTO;
 import com.logicsoftware.models.Perfil;
 import com.logicsoftware.repositories.PerfilRepository;
 import com.logicsoftware.utils.database.Pageable;
@@ -36,7 +36,7 @@ public class PerfilService {
         return perfilEncontrado.orElseThrow(() -> new NotFoundException(message.getMessage("usuario.nao.encontrado", id)));
     }
 
-    public Pageable<Perfil> listar(FiltroPerfilDTO filtro, Integer page, Integer size) {
+    public Pageable<Perfil> listar(PerfilDTO filtro, Integer page, Integer size) {
         return perfilRepository.findPage(filtro, page, size);
     }
 

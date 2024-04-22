@@ -1,7 +1,6 @@
 package com.logicsoftware.resources;
 
 import com.logicsoftware.dtos.perfil.CriarPerfilDTO;
-import com.logicsoftware.dtos.perfil.FiltroPerfilDTO;
 import com.logicsoftware.dtos.perfil.PerfilDTO;
 import com.logicsoftware.services.PerfilService;
 import com.logicsoftware.utils.request.DataResponse;
@@ -36,7 +35,7 @@ public class PerfilResource {
         @Parameter(name = "page", description = "Número da página", example = "1", required = true),
         @Parameter(name = "size", description = "Tamanho da página", example = "10", required = true)
     })
-    public PageResponse<PerfilDTO> listar(FiltroPerfilDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
+    public PageResponse<PerfilDTO> listar(PerfilDTO filter, @QueryParam("page") Integer page, @QueryParam("size") Integer size) {
         return PageResponse.ok(service.listar(filter, page, size), PerfilDTO.class);
     }
 
