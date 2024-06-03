@@ -1,23 +1,30 @@
 package com.logicsoftware.repositories;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.Objects;
+
 import com.logicsoftware.utils.GenericUtils;
 import com.logicsoftware.utils.database.Filter;
 import com.logicsoftware.utils.database.IgnoreCase;
 import com.logicsoftware.utils.database.Pageable;
 import com.logicsoftware.utils.database.WhereType;
+
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Parameters;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.Objects;
-
-public class BaseRepository<T> implements PanacheRepository<T> {
+public class BaseRepository<T, ID> implements PanacheRepositoryBase<T, ID> {
 
     private boolean isNested(Field field) {
         return field.getType().isAnnotationPresent(Filter.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private String getEntityName() {
+        T entity = (T) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return ((Class<?>) entity).getSimpleName();
     }
 
     private Object applyFilterValue(Field field, Object value) {
@@ -50,6 +57,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
     private void applyWhere(StringBuilder query, Field field, WhereType whereType, int currentJoin) {
         if (field.isAnnotationPresent(IgnoreCase.class)) {
             addWhereCondition(query, whereType,"UPPER(e" + currentJoin + "." + field.getName() + ") LIKE CONCAT('%', :" + "e" + currentJoin + "_" + field.getName() + ", '%')");
+            return;
         }
         if (String.class.isAssignableFrom(field.getType())) {
             addWhereCondition(query, whereType,"e" + currentJoin + "." + field.getName() + " LIKE CONCAT('%', :" + "e" + currentJoin + "_" + field.getName() + ", '%')");
@@ -78,10 +86,8 @@ public class BaseRepository<T> implements PanacheRepository<T> {
         applyWhereJoin(field, value, query, whereType, parameters, currentJoin);
     }
 
-    @SuppressWarnings("unchecked")
     private String applyJpqlQueryWithJoin(Object filter, Parameters parameters, int currentJoin, WhereType whereType) {
-        T entity = (T) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        StringBuilder query = new StringBuilder("SELECT ").append("e").append(currentJoin).append(" FROM ").append(((Class<?>) entity).getSimpleName()).append(" e").append(currentJoin);
+        StringBuilder query = new StringBuilder("SELECT ").append("e").append(currentJoin).append(" FROM ").append(getEntityName()).append(" e").append(currentJoin);
 
         for (Field field : GenericUtils.getAllFields(filter.getClass())) {
             try {
@@ -108,7 +114,7 @@ public class BaseRepository<T> implements PanacheRepository<T> {
                 field.setAccessible(true);
                 Object value = field.get(filter);
                 if (Objects.nonNull(value) && !isNested(field)) {
-                    applyWhere(query, field, WhereType.AND, 1);
+                    applyWhere(query, field, whereType, 1);
                     parameters.and("e1_" + field.getName(), applyFilterValue(field, value));
                 }
             } catch (IllegalAccessException e) {
@@ -130,5 +136,23 @@ public class BaseRepository<T> implements PanacheRepository<T> {
         builder.pageSize(size);
 
         return builder.build();
+    }
+
+    public Pageable<T> findPage(Integer page, Integer size) {
+        Pageable.PageableBuilder<T> builder = Pageable.builder();
+
+        PanacheQuery<T> query = findAll();
+        query.page(Page.of(page - 1, size));
+
+        builder.page(query.list());
+        builder.totalElements(query.count());
+        builder.pageSize(size);
+
+        return builder.build();
+    }
+
+    public void setDeletedById(Long id) {
+        String query = "UPDATE " + getEntityName() + " e SET e.deleted = true WHERE e.id = :id";
+        update(query, Parameters.with("id", id));
     }
 }

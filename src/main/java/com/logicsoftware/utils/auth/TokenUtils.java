@@ -1,15 +1,8 @@
 package com.logicsoftware.utils.auth;
 
-import io.smallrye.jwt.build.Jwt;
-import io.smallrye.jwt.build.JwtClaimsBuilder;
-import org.jose4j.jwa.AlgorithmConstraints;
-import org.jose4j.jws.AlgorithmIdentifiers;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.consumer.JwtConsumer;
-import org.jose4j.jwt.consumer.JwtConsumerBuilder;
-
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -21,9 +14,24 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jose4j.jwa.AlgorithmConstraints;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+import org.modelmapper.internal.Pair;
+
+import com.logicsoftware.models.Usuario;
+
+import io.smallrye.jwt.build.Jwt;
+import io.smallrye.jwt.build.JwtClaimsBuilder;
+
 public class TokenUtils {
+
+	public static final String TOKEN_TYPE = "Bearer";
 	
-	public static String getToken(String username, Set<String> roles, Long duration, String issuer) {
+	@SafeVarargs
+	public static String getToken(String username, Set<String> roles, Long duration, String issuer, Pair<String, Object>...claims) {
 		try {
 			String privateKeyLocation = "/privatekey.pem";
 			PrivateKey privateKey = readPrivateKey(privateKeyLocation);
@@ -41,6 +49,11 @@ public class TokenUtils {
 			claimsBuilder.expiresAt(currentTimeInSecs + duration);
 			claimsBuilder.groups(groups);
 
+			if (claims != null) {
+				for (Pair<String, Object> claim : claims) {
+					claimsBuilder.claim(claim.getLeft(), claim.getRight());
+				}
+			}
 
 			return claimsBuilder.jws().keyId(privateKeyLocation).sign(privateKey);
 		} catch (Exception e) {
@@ -48,7 +61,8 @@ public class TokenUtils {
 		}
 	}
 
-	public static String getRefreshToken(String username, Long duration, String issuer) {
+	@SafeVarargs
+	public static String getRefreshToken(String username, Long duration, String issuer, Pair<String, Object>...claims) {
 		try {
 			String privateKeyLocation = "/privatekey.pem";
 			PrivateKey privateKey = readPrivateKey(privateKeyLocation);
@@ -61,6 +75,12 @@ public class TokenUtils {
 			claimsBuilder.issuedAt(currentTimeInSecs);
 			claimsBuilder.expiresAt(currentTimeInSecs + duration);
 
+			if (claims != null) {
+				for (Pair<String, Object> claim : claims) {
+					claimsBuilder.claim(claim.getLeft(), claim.getRight());
+				}
+			}
+
 			return claimsBuilder.jws().keyId(privateKeyLocation).sign(privateKey);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -71,7 +91,7 @@ public class TokenUtils {
 		try (InputStream contentIS = TokenUtils.class.getResourceAsStream(pemResName)) {
 			byte[] tmp = new byte[4096];
 			int length = contentIS.read(tmp);
-			return decodePrivateKey(new String(tmp, 0, length, "UTF-8"));
+			return decodePrivateKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
 		}
 	}
 
@@ -79,7 +99,7 @@ public class TokenUtils {
 		try (InputStream contentIS = TokenUtils.class.getResourceAsStream(pemResName)) {
 			byte[] tmp = new byte[4096];
 			int length = contentIS.read(tmp);
-			return decodePublicKey(new String(tmp, 0, length, "UTF-8"));
+			return decodePublicKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
 		}
 	}
 
@@ -117,25 +137,46 @@ public class TokenUtils {
 		return (int) (currentTimeMS / 1000);
 	}
 
-	public static String getSubject(String refreshToken) {
+	public static JwtClaims getTokenClaims(String token) {
 		try {
 			String publicKeyLocation = "/publickey.pem";
 			PublicKey publicKey = readPublicKey(publicKeyLocation);
 
 			JwtConsumer jwtConsumer = new JwtConsumerBuilder()
-			.setVerificationKey(publicKey)
-			.setRequireExpirationTime()
-			.setAllowedClockSkewInSeconds(30)
-			.setRequireSubject()
-			.setJwsAlgorithmConstraints(AlgorithmConstraints.ConstraintType.PERMIT, AlgorithmIdentifiers.RSA_USING_SHA256)
-			.build();
+					.setVerificationKey(publicKey)
+					.setRequireExpirationTime()
+					.setAllowedClockSkewInSeconds(30)
+					.setRequireSubject()
+					.setJwsAlgorithmConstraints(AlgorithmConstraints.ConstraintType.PERMIT, AlgorithmIdentifiers.RSA_USING_SHA256)
+					.build();
 
-			JwtClaims jwtClaims = jwtConsumer.processToClaims(refreshToken);
+			return jwtConsumer.processToClaims(token);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	public static String getSubject(String refreshToken) {
+		try {
+			JwtClaims jwtClaims = getTokenClaims(refreshToken);
 			return jwtClaims.getSubject();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
+
+    public static Usuario getUsuario(String token) {
+		try {
+			JwtClaims jwtClaims = getTokenClaims(token);
+
+			Usuario user = new Usuario();
+			user.setId(Long.valueOf(jwtClaims.getClaimValue(CustomClaims.id.name(), String.class)));
+			user.setEmail(jwtClaims.getSubject());
+
+			return user;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+    }
 
 }
